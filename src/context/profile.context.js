@@ -1,9 +1,30 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { auth, database } from '../misc/firebase';
 
 const ProfileContext = createContext();
 
 export const ProfileProvider = ({ children }) => {
-  const [profile] = useState(false);
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    auth.onAuthStateChanged(authObj => {
+      if (authObj) {
+        database.ref(`/profiles/${authObj.uid}`).on('value', snap => {
+          console.log('snap', snap);
+        });
+
+        const data = {
+          uid: authObj.uid,
+          email: authObj.email,
+        };
+
+        setProfile(data);
+      } else {
+        setProfile(null);
+      }
+    });
+  }, []);
+
   return (
     <ProfileContext.Provider value={profile}>
       {children}
