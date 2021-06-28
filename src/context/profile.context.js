@@ -26,20 +26,20 @@ export const ProfileProvider = ({ children }) => {
           setLoad(false);
         });
       } else {
-        // if (userRef) {
-        //   userRef.off();
-        // }
+        if (userRef) {
+          userRef.off();
+        }
         setProfile(null);
         setLoad(false);
       }
     });
 
-    // return () => {
-    //   authUnSub();
-    //   if (userRef) {
-    //     userRef.off();
-    //   }
-    // };
+    return () => {
+      authUnSub();
+      if (userRef) {
+        userRef.off();
+      }
+    };
   }, []);
 
   return (
