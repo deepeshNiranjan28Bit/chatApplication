@@ -1,13 +1,23 @@
 import React, { Profiler } from 'react';
-import { Drawer, Button, Divider } from 'rsuite';
+import { Drawer, Button, Divider, Alert } from 'rsuite';
 import EditableInput from '../EditableInput';
 import { useProfile } from '../../context/profile.context';
+import { database } from '../../misc/firebase';
 
 function Dashboard({ onSignOut }) {
   const { profile } = useProfile();
 
   const onSave = async newData => {
-    console.log(newData);
+    const userNickNameRef = database
+      .ref(`/profiles/${profile.uid}`)
+      .child('name');
+    try {
+      await userNickNameRef.set(newData);
+
+      Alert.success('Successful edit!', 4000);
+    } catch (error) {
+      Alert.error(error.message, 4000);
+    }
   };
 
   return (
