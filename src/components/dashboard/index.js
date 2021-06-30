@@ -33,8 +33,8 @@ function Dashboard({ onSignOut }) {
         <EditableInput
           name="nickname"
           initialValue={profile.name}
-          onSave={onSave}
           label={<h6 className="mb-2">NickName</h6>}
+          onSave={onSave}
         />
       </Drawer.Body>
       <Drawer.Footer>
