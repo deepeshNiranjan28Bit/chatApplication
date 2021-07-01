@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Modal, Button, Alert } from 'rsuite';
 import { useModalState } from '../../misc/custom-hooks';
 import AvatarEditor from 'react-avatar-editor';
@@ -12,6 +12,7 @@ function AvatarUploadBtn() {
   const { open, close, isOpen } = useModalState();
 
   const [img, setImg] = useState(null);
+  const avatarRef = useRef();
 
   const onFileInputChange = ev => {
     const currFiles = ev.target.files;
@@ -27,6 +28,11 @@ function AvatarUploadBtn() {
       }
     }
   };
+
+  const onUploadClick = () => {
+    const canvas = avatarRef.current.getImageScaledToCanvas();
+  };
+
   return (
     <div className="mt-3 text-center">
       <div>
@@ -51,6 +57,7 @@ function AvatarUploadBtn() {
             <div className="d-flex justify-content-center align-item-center h-100">
               {img && (
                 <AvatarEditor
+                  ref={avatarRef}
                   image={img}
                   width={200}
                   height={200}
@@ -62,7 +69,7 @@ function AvatarUploadBtn() {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button block appearance="ghost">
+            <Button block appearance="ghost" onClick={onUploadClick}>
               Upload New Avatar
             </Button>
           </Modal.Footer>
