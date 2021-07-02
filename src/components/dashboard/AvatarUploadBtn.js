@@ -2,14 +2,31 @@ import React, { useState, useRef } from 'react';
 import { Modal, Button, Alert } from 'rsuite';
 import { useModalState } from '../../misc/custom-hooks';
 import AvatarEditor from 'react-avatar-editor';
+import { useProfile } from '../../context/profile.context';
+import { database, storage } from '../../misc/firebase';
 
 const fileInputTypes = '.jpeg,.jpg,.png';
 
 const acceptedFileTypes = ['image/png', 'image/jpeg', 'image/pjpeg'];
 
 const isValidFile = file => acceptedFileTypes.includes(file.type);
+
+const getBlob = canvas => {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(blob => {
+      if (blob) {
+        resolve(blob);
+      } else {
+        reject(new Error('File Process Error'));
+      }
+    });
+  });
+};
 function AvatarUploadBtn() {
   const { open, close, isOpen } = useModalState();
+  const [isLoad, setIsLoad] = useState(false);
+
+  const { profile } = useProfile();
 
   const [img, setImg] = useState(null);
   const avatarRef = useRef();
@@ -29,8 +46,33 @@ function AvatarUploadBtn() {
     }
   };
 
-  const onUploadClick = () => {
+  const onUploadClick = async () => {
     const canvas = avatarRef.current.getImageScaledToCanvas();
+    setIsLoad(true);
+    try {
+      const blob = await getBlob(canvas);
+
+      const AvatarFileRef = storage
+        .ref(`/profiles/${profile.uid}`)
+        .child('avatar');
+
+      const uploadAvatarResult = await AvatarFileRef.put(blob, {
+        cacheControl: `public , max-age${3600 * 24 * 3}`,
+      });
+
+      const downloadUrl = await uploadAvatarResult.ref.getDownloadURL();
+
+      const avatarRef = database
+        .ref(`/profiles/${profile.uid}`)
+        .child('avatar');
+
+      avatarRef.set(downloadUrl);
+      setIsLoad(false);
+      Alert.success('Avatar uploaded.', 4000);
+    } catch (error) {
+      setIsLoad(false);
+      Alert.error(error.message, 4000);
+    }
   };
 
   return (
@@ -69,7 +111,12 @@ function AvatarUploadBtn() {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button block appearance="ghost" onClick={onUploadClick}>
+            <Button
+              block
+              appearance="ghost"
+              onClick={onUploadClick}
+              disabled={isLoad}
+            >
               Upload New Avatar
             </Button>
           </Modal.Footer>
