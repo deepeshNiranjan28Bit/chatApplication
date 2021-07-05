@@ -9,7 +9,7 @@ function PublicRoute({ children, ...routeProps }) {
   if (load && !profile) {
     return (
       <Container>
-        <Loader center vertical size="md" content="loading" speed="slow" />
+        <Loader center vertical size="md" content="Loading" speed="slow" />
       </Container>
     );
   }

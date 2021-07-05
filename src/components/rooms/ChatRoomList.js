@@ -2,7 +2,7 @@ import React from 'react';
 import RoomItem from './RoomItem';
 import { Nav } from 'rsuite';
 
-function ChatRoomList({ aboveElHeight }) {
+function ChatRoomList({ aboveHeight }) {
   return (
     <Nav
       appearance="subtle"
@@ -10,7 +10,7 @@ function ChatRoomList({ aboveElHeight }) {
       reversed
       className="overflow-y-scroll custom-scroll"
       style={{
-        height: `calc(100% - ${aboveElHeight}px)`,
+        height: `calc(100% - ${aboveHeight}px)`,
       }}
     >
       <Nav.Item>

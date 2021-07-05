@@ -19,10 +19,12 @@ function Sidebar() {
       <div ref={topSideBarRef}>
         <DashboardToggle />
         <CreateRoomBtnModal />
-        <Divider>Join the conversation</Divider>
+        <Divider style={{ margin: 0, padding: '30px 0' }}>
+          Join conversation
+        </Divider>
       </div>
       <div>
-        <ChatRoomList aboveElHeight={height} />
+        <ChatRoomList aboveHeight={height} />
       </div>
     </div>
   );
