@@ -62,7 +62,7 @@ function CreateRoomBtnModal() {
   };
   return (
     <div className="mt-2">
-      <Button block element color="green" onClick={open}>
+      <Button block color="green" onClick={open}>
         <Icon icon="creative" /> Create New Room.
       </Button>
 
