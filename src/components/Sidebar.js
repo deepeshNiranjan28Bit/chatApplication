@@ -11,7 +11,6 @@ function Sidebar() {
   useEffect(() => {
     if (topSideBarRef.current) {
       setHeight(topSideBarRef.current.scrollHeight);
-      console.log(topSideBarRef.current.scrollHeight);
     }
   }, [topSideBarRef]);
   return (
