@@ -22,7 +22,7 @@ function Sidebar() {
           Join conversation
         </Divider>
       </div>
-      <div>
+      <div className="h-100">
         <ChatRoomList aboveHeight={height} />
       </div>
     </div>
