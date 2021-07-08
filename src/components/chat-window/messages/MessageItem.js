@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import TimeAgo from 'timeago-react';
 import ProfileAvatar from '../../dashboard/ProfileAvatar';
 import ProfileInfoBtnModal from './ProfileInfoBtnModal';
