@@ -5,16 +5,21 @@ import { useProfile } from '../../context/profile.context';
 import { database } from '../../misc/firebase';
 import ProviderBlock from './ProviderBlock';
 import AvatarUploadBtn from './AvatarUploadBtn';
+import { getUserUpdate } from '../../misc/helpers';
 
 function Dashboard({ onSignOut }) {
   const { profile } = useProfile();
 
   const onSave = async newData => {
-    const userNickNameRef = database
-      .ref(`/profiles/${profile.uid}`)
-      .child('name');
     try {
-      await userNickNameRef.set(newData);
+      const updates = await getUserUpdate(
+        profile.uid,
+        'name',
+        newData,
+        database
+      );
+
+      await database.ref().update(updates);
 
       Alert.success('Successful edit!', 4000);
     } catch (error) {
