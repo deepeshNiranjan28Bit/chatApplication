@@ -12,7 +12,7 @@ export function transfromToArrWithId(snapVal) {
     ? Object.keys(snapVal).map(roomId => {
         return { ...snapVal[roomId], id: roomId };
       })
-    : ff;
+    : '';
 }
 
 export async function getUserUpdate(userId, keyToUpdate, value, db) {

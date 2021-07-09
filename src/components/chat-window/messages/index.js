@@ -22,7 +22,7 @@ function Messages() {
         setMessages(data);
       });
     return () => {
-      messagesRef.off(value);
+      messagesRef.off('value');
     };
   }, [chatId]);
   return (
