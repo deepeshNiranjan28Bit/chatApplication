@@ -1,7 +1,6 @@
 import React from 'react';
 import { usePresence } from '../misc/custom-hooks';
 import { Whisper, Badge, Tooltip } from 'rsuite';
-import { getQueriesForElement } from '@testing-library/react';
 
 const getColor = presence => {
   if (!presence) {
