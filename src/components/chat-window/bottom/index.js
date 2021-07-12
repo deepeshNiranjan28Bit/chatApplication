@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
+import { useParams } from 'react-router';
 import { InputGroup, Icon, Input, Alert } from 'rsuite';
 import firebase from 'firebase/app';
-import { useParams } from 'react-router';
 import { useProfile } from '../../../context/profile.context';
 import { database } from '../../../misc/firebase';
 
