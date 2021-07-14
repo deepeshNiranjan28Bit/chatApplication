@@ -105,7 +105,7 @@ function ChatBottom() {
     <div>
       <InputGroup>
         <AttachmentBtnModal afterUpload={afterUpload} />
-        <AudioMsgBtn />
+        <AudioMsgBtn afterUpload={afterUpload} />
         <Input
           placeholder="Write a new message here....."
           value={input}
