@@ -1,4 +1,4 @@
-import React, { Profiler } from 'react';
+import React from 'react';
 import { Drawer, Button, Divider, Alert } from 'rsuite';
 import EditableInput from '../EditableInput';
 import { useProfile } from '../../context/profile.context';
@@ -45,6 +45,7 @@ function Dashboard({ onSignOut }) {
         <AvatarUploadBtn />
       </Drawer.Body>
       <Drawer.Footer>
+        {<h1></h1>}
         <Button block color="red" onClick={onSignOut}>
           Sign Out
         </Button>
