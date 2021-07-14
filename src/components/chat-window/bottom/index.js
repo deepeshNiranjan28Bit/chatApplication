@@ -37,7 +37,6 @@ function ChatBottom() {
     }
 
     const msgData = assembleMessage(profile, chatId);
-
     msgData.text = input;
 
     const updates = {};
@@ -49,6 +48,7 @@ function ChatBottom() {
       ...msgData,
       msgId: messageId,
     };
+
     setIsLoad(true);
     try {
       await database.ref().update(updates);
@@ -57,7 +57,7 @@ function ChatBottom() {
       setIsLoad(false);
     } catch (err) {
       setIsLoad(false);
-      Alert.error(err.message, 4000);
+      Alert.error(err.message);
     }
   };
 
@@ -68,10 +68,42 @@ function ChatBottom() {
     }
   };
 
+  const afterUpload = useCallback(
+    async files => {
+      setIsLoad(true);
+
+      const updates = {};
+
+      files.forEach(file => {
+        const msgData = assembleMessage(profile, chatId);
+        msgData.file = file;
+        const messageId = database.ref('messages').push().key;
+
+        updates[`/messages/${messageId}`] = msgData;
+      });
+
+      const lstMsgId = Object.keys(updates).pop();
+
+      updates[`/rooms/${chatId}/lastMessage`] = {
+        ...updates[lstMsgId],
+        msgId: lstMsgId,
+      };
+
+      try {
+        await database.ref().update(updates);
+        setIsLoad(false);
+      } catch (err) {
+        setIsLoad(false);
+        Alert.error(err.message);
+      }
+    },
+    [chatId, profile]
+  );
+
   return (
     <div>
       <InputGroup>
-        <AttachmentBtnModal />
+        <AttachmentBtnModal afterUpload={afterUpload} />
         <Input
           placeholder="Write a new message here....."
           value={input}
