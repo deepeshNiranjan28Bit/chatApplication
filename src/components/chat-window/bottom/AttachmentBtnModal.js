@@ -21,6 +21,7 @@ function AttachmentBtnModal({ afterUpload }) {
   };
 
   const onUpload = async () => {
+    setIsLoad(true);
     try {
       const uploadPromises = fileList.map(f => {
         return storage
