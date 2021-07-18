@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Divider } from 'rsuite';
 import DashboardToggle from './dashboard/DashboardToggle';
-import CreateRoomBtnModal from './CreateRoomBtnModal';
 import ChatRoomList from './rooms/ChatRoomList';
+import CreateRoomBtnModal from './CreateRoomBtnModal';
 
 function Sidebar() {
   const topSideBarRef = useRef();
